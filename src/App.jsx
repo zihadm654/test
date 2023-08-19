@@ -82,7 +82,7 @@ export default function Example() {
 
   const fetchData = async () => {
     try {
-      const res = await Axios.get('https://jsonplaceholder.typicode.com/posts')
+      const res = await Axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10')
       setData(res.data)
     } catch (error) {
       console.error(error, 'error');
@@ -99,7 +99,11 @@ export default function Example() {
         category: category,
         subCategory: subCategory
       })
+      alert('successfully added', res.data)
       console.log('sucess', res.data);
+      setName('')
+      setCategory('')
+      setSubCategory('')
     } catch (error) {
       console.error(error, "error")
     }
@@ -115,6 +119,7 @@ export default function Example() {
         <input
           onChange={(e) => setName(e.target.value)}
           required
+          value={name}
           className='block w-full p-2  text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
           type="text"
           placeholder='provide a name' />
@@ -124,6 +129,7 @@ export default function Example() {
           id="small"
           defaultValue={categories[0]}
           onChange={(e) => setCategory(e.target.value)}
+          value={category}
           className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           {categories?.map((cat => (
             <option className="p-1" value={cat.name} key={cat.id}>{cat.name}</option>
@@ -133,6 +139,7 @@ export default function Example() {
         <select
           defaultValue={subCategories[0]}
           onChange={(e) => setSubCategory(e.target.value)}
+          value={subCategory}
           id="subCategory"
           className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           {subCategories?.map((cat => (
@@ -144,6 +151,9 @@ export default function Example() {
         <br />
         <input type="submit" name="submit" value={"save"} className='mt-2 px-5 py-2 bg-gray-900' />
       </form>
+      {data.map(data => (
+        <p key={data.id}>{data.title}</p>
+      ))}
     </div>
   )
 }
